@@ -236,3 +236,226 @@
   </svg>
   <figcaption style="font-size: 12px; color: #5F5E5A; text-align: center; margin-top: 0.5rem;">Proposal architecture: from problem to defense</figcaption>
 </figure>
+
+<section class="sim-root" style="margin: 2.5rem 0 0; max-width: 720px;">
+  <style>
+    .sim-root * { box-sizing: border-box; }
+    .sim-root .sim-h3 { font-size: 15px; font-weight: 500; color: #2C2C2A; margin: 0 0 0.25rem; }
+    .sim-root .sim-lead { font-size: 13px; color: #5F5E5A; margin: 0 0 1rem; line-height: 1.55; }
+    .sim-root .sim-scenarios { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .sim-root .sim-scn-btn {
+      background: #FFFFFF; border: 1px solid #D9D6CC; border-radius: 8px;
+      padding: 8px 12px; font-size: 12px; cursor: pointer; color: #2C2C2A;
+      font-family: inherit; transition: all 0.15s; flex: 1; min-width: 130px; text-align: left;
+    }
+    .sim-root .sim-scn-btn:hover { border-color: #0F6E56; }
+    .sim-root .sim-scn-btn.sim-active { background: #E1F5EE; border-color: #0F6E56; color: #085041; }
+    .sim-root .sim-scn-name { font-weight: 500; display: block; margin-bottom: 2px; font-size: 12px; }
+    .sim-root .sim-scn-meta { font-size: 10px; color: #5F5E5A; }
+    .sim-root .sim-scn-btn.sim-active .sim-scn-meta { color: #0F6E56; }
+    .sim-root .sim-panel {
+      background: #FFFFFF; border: 1px solid #D9D6CC; border-radius: 10px;
+      padding: 1rem; margin-bottom: 0.75rem;
+    }
+    .sim-root .sim-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; }
+    @media (max-width: 480px) { .sim-root .sim-controls { grid-template-columns: 1fr; } }
+    .sim-root .sim-control label {
+      display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; color: #2C2C2A;
+    }
+    .sim-root .sim-val { font-weight: 500; color: #085041; font-variant-numeric: tabular-nums; }
+    .sim-root .sim-control input[type=range] { width: 100%; accent-color: #0F6E56; margin: 0; }
+    .sim-root .sim-results { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .sim-root .sim-result { background: #E1F5EE; border-radius: 8px; padding: 12px 14px; }
+    .sim-root .sim-lbl { font-size: 10px; color: #0F6E56; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .sim-root .sim-num { font-size: 22px; font-weight: 500; color: #085041; font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .sim-root .sim-sub { font-size: 11px; color: #0F6E56; margin-top: 4px; }
+    .sim-root .sim-chart svg { width: 100%; height: auto; display: block; }
+    .sim-root .sim-bms { font-size: 11px; color: #5F5E5A; margin-top: 0.5rem; line-height: 1.6; }
+    .sim-root .sim-bm { display: flex; align-items: center; gap: 8px; }
+    .sim-root .sim-swatch-bm { width: 18px; height: 0; border-top: 2px dashed #C97A3F; display: inline-block; flex-shrink: 0; }
+    .sim-root .sim-swatch-user { width: 18px; height: 0; border-top: 2px solid #0F6E56; display: inline-block; flex-shrink: 0; }
+    .sim-root .sim-notes { font-size: 11px; color: #5F5E5A; line-height: 1.55; margin-top: 0.75rem; }
+  </style>
+
+  <h3 class="sim-h3">Interactive GDP simulator</h3>
+  <p class="sim-lead">Project the GDP impact of AI adoption in mass food production under different assumptions, and compare to institutional benchmarks (WEF, PwC, OECD).</p>
+
+  <div class="sim-scenarios" id="sim-scenarios"></div>
+
+  <div class="sim-panel">
+    <div class="sim-controls">
+      <div class="sim-control">
+        <label>Initial AI adoption <span class="sim-val"><span id="sim-adoption-val">30</span>%</span></label>
+        <input type="range" id="sim-adoption" min="0" max="100" step="1" value="30">
+      </div>
+      <div class="sim-control">
+        <label>Productivity uplift <span class="sim-val"><span id="sim-uplift-val">15</span>%</span></label>
+        <input type="range" id="sim-uplift" min="0" max="40" step="0.5" value="15">
+      </div>
+      <div class="sim-control">
+        <label>Time horizon <span class="sim-val"><span id="sim-horizon-val">10</span> yrs</span></label>
+        <input type="range" id="sim-horizon" min="1" max="20" step="1" value="10">
+      </div>
+      <div class="sim-control">
+        <label>Annual adoption growth <span class="sim-val"><span id="sim-growth-val">8</span>%</span></label>
+        <input type="range" id="sim-growth" min="0" max="25" step="0.5" value="8">
+      </div>
+    </div>
+  </div>
+
+  <div class="sim-panel">
+    <div class="sim-results">
+      <div class="sim-result">
+        <div class="sim-lbl">Annual gain (final year)</div>
+        <div class="sim-num" id="sim-annual-out">—</div>
+        <div class="sim-sub" id="sim-annual-sub">—</div>
+      </div>
+      <div class="sim-result">
+        <div class="sim-lbl">Cumulative gain</div>
+        <div class="sim-num" id="sim-cumulative-out">—</div>
+        <div class="sim-sub" id="sim-cumulative-sub">—</div>
+      </div>
+    </div>
+    <div class="sim-chart">
+      <svg id="sim-chart-svg" viewBox="0 0 600 260" role="img" aria-label="Annual GDP gain over the time horizon"></svg>
+    </div>
+    <div class="sim-bms" id="sim-benchmarks"></div>
+  </div>
+
+  <div class="sim-notes">
+    <strong>Model.</strong> annual gain = baseline GDP × adoption(t) × uplift, where adoption(t) = min(100%, initial × (1 + growth)<sup>t−1</sup>). Cumulative is undiscounted.<br>
+    <strong>Baselines.</strong> LMIC ag GDP ≈ $1.6T (implied by WEF $450B = 28%); UK ≈ $3.08T (PwC 10.3% = $317B); US ≈ $27T (OECD-style, Filippucci et al. 2024 0.25–0.6 pp TFP).
+  </div>
+</section>
+
+<script>
+(function() {
+  const SCENARIOS = {
+    lmic: { name: "LMIC agriculture", meta: "Ag GDP, low/middle-income · $1.6T", baselineGDP: 1600,
+      benchmarks: [{ value: 450, label: "WEF: $450B/yr (digital ag in LMICs)" }],
+      defaults: { adoption: 30, uplift: 28, horizon: 10, growth: 8 } },
+    uk: { name: "UK economy", meta: "Total GDP, all sectors · $3.08T", baselineGDP: 3080,
+      benchmarks: [{ value: 317, label: "PwC (in Ahmad et al. 2024): $317B (10.3% GDP)" }],
+      defaults: { adoption: 35, uplift: 10, horizon: 10, growth: 6 } },
+    us: { name: "US economy (TFP)", meta: "Total GDP, OECD-style · $27T", baselineGDP: 27000,
+      benchmarks: [
+        { value: 27000 * 0.0025, label: "OECD low: 0.25 pp TFP × $27T = ~$67.5B/yr" },
+        { value: 27000 * 0.006, label: "OECD high: 0.60 pp TFP × $27T = ~$162B/yr" }
+      ],
+      defaults: { adoption: 25, uplift: 4, horizon: 10, growth: 5 } }
+  };
+
+  let currentScenario = "lmic";
+
+  function fmtUSD(b) {
+    if (b >= 1000) return "$" + (b / 1000).toFixed(2) + "T";
+    if (b >= 10) return "$" + b.toFixed(0) + "B";
+    return "$" + b.toFixed(1) + "B";
+  }
+
+  function compute() {
+    const s = SCENARIOS[currentScenario];
+    const adoption = +document.getElementById("sim-adoption").value;
+    const uplift = +document.getElementById("sim-uplift").value;
+    const horizon = +document.getElementById("sim-horizon").value;
+    const growth = +document.getElementById("sim-growth").value;
+    const series = []; let cumulative = 0;
+    for (let t = 1; t <= horizon; t++) {
+      const a = Math.min(1, (adoption / 100) * Math.pow(1 + growth / 100, t - 1));
+      const gain = s.baselineGDP * a * (uplift / 100);
+      cumulative += gain;
+      series.push({ year: t, gain, adoption: a * 100, cumulative });
+    }
+    return { series, scenario: s };
+  }
+
+  function renderChart(state) {
+    const svg = document.getElementById("sim-chart-svg");
+    const W = 600, H = 260, padL = 56, padR = 16, padT = 16, padB = 32;
+    const innerW = W - padL - padR, innerH = H - padT - padB;
+    const { series, scenario } = state;
+    const maxGain = Math.max(...series.map(d => d.gain), ...scenario.benchmarks.map(b => b.value), 1);
+    const niceMax = Math.ceil(maxGain / 50) * 50;
+    const x = i => padL + (series.length === 1 ? innerW / 2 : (i / (series.length - 1)) * innerW);
+    const y = v => padT + innerH - (v / niceMax) * innerH;
+    let out = "";
+    for (let i = 0; i <= 5; i++) {
+      const v = (niceMax / 5) * i, yy = y(v);
+      out += `<line x1="${padL}" y1="${yy}" x2="${W - padR}" y2="${yy}" stroke="#EAE7DD" stroke-width="1"/>`;
+      out += `<text x="${padL - 6}" y="${yy + 3}" font-size="9" fill="#5F5E5A" text-anchor="end">${fmtUSD(v)}</text>`;
+    }
+    const stepX = Math.max(1, Math.ceil(series.length / 8));
+    series.forEach((d, i) => {
+      if (i % stepX === 0 || i === series.length - 1) {
+        out += `<text x="${x(i)}" y="${H - padB + 14}" font-size="9" fill="#5F5E5A" text-anchor="middle">Y${d.year}</text>`;
+      }
+    });
+    scenario.benchmarks.forEach(b => {
+      if (b.value > niceMax) return;
+      out += `<line x1="${padL}" y1="${y(b.value)}" x2="${W - padR}" y2="${y(b.value)}" stroke="#C97A3F" stroke-width="1.5" stroke-dasharray="5,3"/>`;
+    });
+    const path = series.map((d, i) => `${i === 0 ? "M" : "L"} ${x(i)} ${y(d.gain)}`).join(" ");
+    const area = `${path} L ${x(series.length - 1)} ${y(0)} L ${x(0)} ${y(0)} Z`;
+    out += `<path d="${area}" fill="#E1F5EE" opacity="0.7"/>`;
+    out += `<path d="${path}" fill="none" stroke="#0F6E56" stroke-width="2"/>`;
+    series.forEach((d, i) => {
+      out += `<circle cx="${x(i)}" cy="${y(d.gain)}" r="3" fill="#0F6E56"><title>Year ${d.year}: ${fmtUSD(d.gain)} (adoption ${d.adoption.toFixed(1)}%)</title></circle>`;
+    });
+    out += `<text x="${padL}" y="${padT - 4}" font-size="10" fill="#5F5E5A">Annual GDP gain</text>`;
+    svg.innerHTML = out;
+  }
+
+  function renderResults(state) {
+    const last = state.series[state.series.length - 1];
+    document.getElementById("sim-annual-out").textContent = fmtUSD(last.gain);
+    document.getElementById("sim-annual-sub").textContent = `Year ${last.year}, adoption ${last.adoption.toFixed(0)}%`;
+    document.getElementById("sim-cumulative-out").textContent = fmtUSD(last.cumulative);
+    document.getElementById("sim-cumulative-sub").textContent = `Sum across ${state.series.length} years (undiscounted)`;
+  }
+
+  function renderBenchmarks(state) {
+    const lines = [`<div class="sim-bm"><span class="sim-swatch-user"></span> Your scenario (annual gain)</div>`];
+    state.scenario.benchmarks.forEach(b => {
+      lines.push(`<div class="sim-bm"><span class="sim-swatch-bm"></span> ${b.label}</div>`);
+    });
+    document.getElementById("sim-benchmarks").innerHTML = lines.join("");
+  }
+
+  function renderScenarios() {
+    const wrap = document.getElementById("sim-scenarios");
+    wrap.innerHTML = Object.entries(SCENARIOS).map(([key, s]) =>
+      `<button class="sim-scn-btn ${key === currentScenario ? "sim-active" : ""}" data-key="${key}">
+        <span class="sim-scn-name">${s.name}</span>
+        <span class="sim-scn-meta">${s.meta}</span>
+      </button>`).join("");
+    wrap.querySelectorAll(".sim-scn-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentScenario = btn.dataset.key;
+        applyDefaults(); renderScenarios(); update();
+      });
+    });
+  }
+
+  function applyDefaults() {
+    const d = SCENARIOS[currentScenario].defaults;
+    ["adoption", "uplift", "horizon", "growth"].forEach(k => {
+      document.getElementById("sim-" + k).value = d[k];
+      document.getElementById("sim-" + k + "-val").textContent = d[k];
+    });
+  }
+
+  function update() {
+    ["adoption", "uplift", "horizon", "growth"].forEach(k => {
+      document.getElementById("sim-" + k + "-val").textContent = document.getElementById("sim-" + k).value;
+    });
+    const state = compute();
+    renderResults(state); renderChart(state); renderBenchmarks(state);
+  }
+
+  ["adoption", "uplift", "horizon", "growth"].forEach(k => {
+    document.getElementById("sim-" + k).addEventListener("input", update);
+  });
+
+  renderScenarios(); applyDefaults(); update();
+})();
+</script>
