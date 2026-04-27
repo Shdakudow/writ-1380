@@ -1,0 +1,112 @@
+<h2 class="sr-only">Three-source overview for research proposal on AI in mass food production: each card shows a key source, its featured statistic, and a thirty-word annotation describing its role in the argument.</h2>
+
+<style>
+  .src-intro {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+    padding: 0 4px;
+  }
+  .src-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .src-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  .src-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--border-radius-md);
+    align-self: flex-start;
+    letter-spacing: 0.3px;
+  }
+  .src-tag.teal { background: #E1F5EE; color: #085041; }
+  .src-tag.gray { background: #F1EFE8; color: #444441; }
+  .src-tag.purple { background: #EEEDFE; color: #3C3489; }
+  .src-citation {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    font-family: var(--font-serif);
+  }
+  .src-citation strong { font-weight: 500; color: var(--color-text-primary); }
+  .src-statbox {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 14px 16px;
+  }
+  .src-stat {
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--color-text-primary);
+  }
+  .src-stat-label {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .src-annotation {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  .src-wordcount {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    margin-top: -6px;
+  }
+</style>
+
+<p class="src-intro">Three sources, each anchoring a different leg of the argument: the technology, the problem, and the economic case.</p>
+
+<div class="src-grid">
+
+  <div class="src-card">
+    <span class="src-tag teal">Technology + counterargument</span>
+    <p class="src-citation"><strong>Ahmad et al.</strong> (2024). AI can empower agriculture for global food security. <em>Frontiers in Artificial Intelligence</em>, 7, 1328530.</p>
+    <div class="src-statbox">
+      <div class="src-stat">10.3%</div>
+      <div class="src-stat-label">Projected UK GDP gain from AI adoption (~$317B)</div>
+    </div>
+    <p class="src-annotation">Surveys AI in agriculture — irrigation networks, monitoring robots, disease detection — and cites projected 10.3% UK GDP gains, while flagging the digital divide critique I must address in my proposal.</p>
+    <p class="src-wordcount">30 words</p>
+  </div>
+
+  <div class="src-card">
+    <span class="src-tag gray">Problem scale</span>
+    <p class="src-citation"><strong>FAO et al.</strong> (2025). The State of Food Security and Nutrition in the World 2025.</p>
+    <div class="src-statbox">
+      <div class="src-stat">673M</div>
+      <div class="src-stat-label">People experiencing hunger in 2024 (8.2% globally)</div>
+    </div>
+    <p class="src-annotation">Documents 673 million people experiencing hunger and 2.3 billion facing food insecurity in 2024. A 10% rise in food prices increases insecurity by 3.5%, linking productivity directly to welfare.</p>
+    <p class="src-wordcount">30 words</p>
+  </div>
+
+  <div class="src-card">
+    <span class="src-tag purple">Macro GDP case</span>
+    <p class="src-citation"><strong>World Economic Forum</strong> (2026, Jan 12). How agricultural intelligence can revolutionize farming.</p>
+    <div class="src-statbox">
+      <div class="src-stat">$450B</div>
+      <div class="src-stat-label">Annual agricultural GDP boost in low/middle-income countries</div>
+    </div>
+    <p class="src-annotation">Projects AI-amplified digital agriculture could boost low- and middle-income agricultural GDP by $450 billion annually. Cites Syngenta's Cropwise platform deployed across 70 million hectares in 30+ countries.</p>
+    <p class="src-wordcount">28 words</p>
+  </div>
+
+</div>
